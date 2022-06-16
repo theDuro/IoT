@@ -1,0 +1,105 @@
+body {
+    background-color: #DDD;
+    margin: 0;
+}
+
+#wrapper {
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#categories {
+    width: 200px;
+    float: left;
+}
+
+#jokes {
+    width: 700px;
+    float: left;
+}
+.header {
+    text-align: center;
+}
+
+.add-button {
+    background-color: #009879;
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 150px;
+    padding: 3px;
+    text-align: center;
+}
+
+.add-button:hover {
+    cursor: pointer;
+    background-color: #00A98A;
+}
+
+.inner-link {
+    color: black;
+    text-decoration: none;
+}
+
+.category {
+    border: 1px solid black;
+    border-radius: 5px;
+    text-align: center;
+    width: 180px;
+    padding: 3px;
+    margin-top: 5px;
+    background-color: #CCC;
+}
+
+.category:hover {
+    background-color: #BBB;
+    cursor: pointer;
+}
+
+.joke {
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+
+.title {
+    text-align: center;
+    background-color: #CCC;
+    border-bottom: 1px dashed #555;
+    border-radius: 10px;
+    margin: 0;
+    padding: 10px;
+}
+
+.content {
+     padding-left: 10px;
+}
+
+.joke-info {
+    font-size: 12px;
+    text-align: center;
+}
+
+#menu a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+}
+
+#menu a:hover {
+    background-color: #777;
+    cursor: pointer;
+}
+
+#menu {
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #333;
+    color: white;
+}
+
+.menu-item {
+    float: left;
+}

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Komendy</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/table.css}">
+
+    <style>
+        body {
+    background-color: #DDD;
+    margin: 0;
+}
+
+#wrapper {
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#categories {
+    width: 200px;
+    float: left;
+}
+
+#jokes {
+    width: 700px;
+    float: left;
+}
+.header {
+    text-align: center;
+}
+
+.add-button {
+    background-color: #009879;
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 150px;
+    padding: 3px;
+    text-align: center;
+}
+
+.add-button:hover {
+    cursor: pointer;
+    background-color: #00A98A;
+}
+
+.inner-link {
+    color: black;
+    text-decoration: none;
+}
+
+.category {
+    border: 1px solid black;
+    border-radius: 5px;
+    text-align: center;
+    width: 180px;
+    padding: 3px;
+    margin-top: 5px;
+    background-color: #CCC;
+}
+
+.category:hover {
+    background-color: #BBB;
+    cursor: pointer;
+}
+
+.joke {
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+
+.title {
+    text-align: center;
+    background-color: #CCC;
+    border-bottom: 1px dashed #555;
+    border-radius: 10px;
+    margin: 0;
+    padding: 10px;
+}
+
+.content {
+     padding-left: 10px;
+}
+
+.joke-info {
+    font-size: 12px;
+    text-align: center;
+}
+
+#menu a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+}
+
+#menu a:hover {
+    background-color: #777;
+    cursor: pointer;
+}
+
+#menu {
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #333;
+    color: white;
+}
+
+.menu-item {
+    float: left;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    width: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+    </style>
+</head>
+<body>
+
+<div id="menu">
+    <a th:href="@{/gui/commands}" class="menu-item">Komendy</a>
+    <a th:href="@{/gui/commands/add}" class="menu-item">Dodaj nową komendę</a>
+
+    <div style="clear: both;"></div>
+</div>
+
+<h1 class="header">Lista Komend</h1>
+
+<div id="wrapper">
+    <table class="styled-table">
+        <thead>
+        <tr>
+            <th>Id komendy</th>
+            <th>Próg zaświecenia</th>
+            <th>Częstotliwość</th>
+            <th>Moc</th>
+            <th>Id użytkownika</th>
+            <th>Edytuj</th>
+            <th>Usuń</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="command : ${commands}">
+            <td th:text="${command.comandId}">comandId</td>
+            <td th:text="${command.ledLimitedValue}">ledLimitedValue</td>
+            <td th:text="${command.ledFrequency}">ledFrequency</td>
+            <td th:text="${command.enginePower}">enginePower</td>
+            <td th:text="${command.userId}">userId</td>
+            <td><a th:href="@{/gui/commands/{commandId}/edit(commandId=${command.comandId})}">Edytuj</a></td>
+            <td><a th:href="@{/gui/commands/{commandId}/delete(commandId=${command.comandId})}">Usuń</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
