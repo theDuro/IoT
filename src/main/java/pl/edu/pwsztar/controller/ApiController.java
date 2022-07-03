@@ -13,7 +13,10 @@ import pl.edu.pwsztar.domain.dto.CreateComandDto;
 import pl.edu.pwsztar.domain.dto.UserLoginDto;
 import pl.edu.pwsztar.domain.dto.UserRegistrationDto;
 
+import pl.edu.pwsztar.domain.entity.Comand;
+import pl.edu.pwsztar.domain.entity.RuleWithTime;
 import pl.edu.pwsztar.service.serviceImpl.ComandService;
+import pl.edu.pwsztar.service.serviceImpl.RedisComandService;
 import pl.edu.pwsztar.service.serviceImpl.UserService;
 
 import java.util.List;
@@ -26,25 +29,16 @@ public class ApiController {
 
     private final ComandService comandService;
     private final UserService userService;
+    private final RedisComandService redisComandService;
 
     @Autowired
-    public ApiController(ComandService comandService, UserService userService) {
+    public ApiController(ComandService comandService, UserService userService,RedisComandService redisComandService) {
 
         this.comandService = comandService;
         this.userService = userService;
+        this.redisComandService = redisComandService;
     }
-/*
-    @CrossOrigin
-    @GetMapping(value = "/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<String> login(@RequestBody UserLoginDto userLoginDto) {
-        LOGGER.info("create comand: {}");
-        //todo miał być dologowania
 
-
-
-        return new ResponseEntity<>( HttpStatus.CREATED);
-    }
-    */
 
     @CrossOrigin
     @GetMapping(value = "/comands", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -53,7 +47,7 @@ public class ApiController {
 
         List<ComandDto> comandDto = comandService.findAll();
         return new ResponseEntity<>(comandDto, HttpStatus.OK);
-        //komenda dla wszystkich bez seciurity
+
     }
 
 
@@ -61,29 +55,37 @@ public class ApiController {
 
 
     @CrossOrigin
-    @PostMapping(value = "/comands", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> createComand(@RequestBody CreateComandDto createComandDto) {
+    @PostMapping(value = "/comands/{expire}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<?> createComand(@RequestBody CreateComandDto createComandDto,@PathVariable("expire") Integer expire) {
         LOGGER.info("create comand: {}", createComandDto);
-        comandService.addComand(createComandDto);
-        //todo do seciurity
+         Comand comand = comandService.addComand(createComandDto);
+         redisComandService.addRedisComand(comand,expire);
+    //todo to test
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
+    @CrossOrigin
+    @PostMapping(value = "/redisComand",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<?> createRedisComand(@RequestBody RuleWithTime ruleWithTime){
+        redisComandService.addRedisComand(ruleWithTime);
+        //todo schoud be not permited
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     @CrossOrigin
     @DeleteMapping(value = "/delte/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> createComand(@PathVariable("id") Long id) {
         comandService.deleteComand(id);
-        //todo dododania seciurity
-
+        redisComandService.delteById(id);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @CrossOrigin
-    @PostMapping(value = "/comandupdate/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> updateComand(@PathVariable("id") Long id, @RequestBody CreateComandDto createComandDto) {
+    @PostMapping(value = "/comandupdate/{id}/{expire}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<?> updateComand(@PathVariable("id") Long id,@PathVariable("expire") Integer expire, @RequestBody CreateComandDto createComandDto) {
         try {
-            comandService.updateComand(createComandDto, id);
+            Comand comand =comandService.updateComand(createComandDto, id);
+            redisComandService.updateRedisComand(comand,expire);
+
 
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -93,13 +95,6 @@ public class ApiController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @CrossOrigin
-    @PostMapping(value = "/registration", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> addNewUser(@RequestBody UserRegistrationDto userRegistrationDto) {
-      userService.addNewUser(userRegistrationDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-      //todo  to miał byc do loginu
-    }
 
 
 
@@ -107,7 +102,7 @@ public class ApiController {
     @CrossOrigin
     @GetMapping(value = "/getNickFromId/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<String> getUsserNameById(@PathVariable("id") Long id) {
-        String name = userService.getUserNamebyId(id);
+        String name = userService.getUserNamebyId(id);//todo not needet
         return new ResponseEntity<>(name, HttpStatus.OK);
         //todo tomiało być do loginu
 
@@ -117,11 +112,12 @@ public class ApiController {
     @GetMapping(value = "/comandForIot", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ComandDto> getComandForIot() {
         ComandDto comandDto = comandService.getComandDtoToIot();
+        //todo shoiud take first one from sql anddelthe this object
+
         return new ResponseEntity<>(comandDto, HttpStatus.OK);
-        //to niejest dla fronendu
-
-
     }
+
+
 
 }
 

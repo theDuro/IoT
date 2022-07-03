@@ -8,10 +8,12 @@ public class CreateComandDto implements Serializable {
     private Float ledFrequency ;
     private Float enginePower;
     private Long userId;
+    private int expiredTime;
 
     public CreateComandDto() {
     }
-    public CreateComandDto( float ledLimitedValue,float ledFrequency,float enginePower,long userId) {
+    public CreateComandDto( float ledLimitedValue,float ledFrequency,float enginePower,int expiredTime,long userId) {
+        this.expiredTime = expiredTime;
         this.ledLimitedValue = ledLimitedValue;
         this.ledFrequency = ledFrequency;
         this.enginePower = enginePower;

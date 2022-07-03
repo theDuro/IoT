@@ -2,6 +2,7 @@ package pl.edu.pwsztar.service.serviceImpl;
 
 import pl.edu.pwsztar.domain.dto.ComandDto;
 import pl.edu.pwsztar.domain.dto.CreateComandDto;
+import pl.edu.pwsztar.domain.entity.Comand;
 
 import java.util.List;
 
@@ -9,8 +10,9 @@ public interface ComandService {
 
     List<ComandDto> findAll();
     ComandDto findById(Long id);
-    void addComand(CreateComandDto createComandDto);
+    Comand addComand(CreateComandDto createComandDto);
     void deleteComand(Long id);
-    void updateComand(CreateComandDto ComandDto, Long id)  throws NullPointerException;
+    Comand updateComand(CreateComandDto ComandDto, Long id)  throws NullPointerException;
     ComandDto getComandDtoToIot();
+
 }
