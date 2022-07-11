@@ -6,13 +6,19 @@ import org.springframework.stereotype.Repository;
 import pl.edu.pwsztar.config.RedisConfig;
 import pl.edu.pwsztar.domain.entity.RuleWithTime;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Repository
 public class RuleWithTimeDao {
     public static final String HASH_KEY = "RuleWithTime";
+
+    private  final RedisTemplate template;
     @Autowired
-    private RedisTemplate template;
+    RuleWithTimeDao(RedisTemplate template){
+        this.template = template;
+    }
+
 public RuleWithTime save(RuleWithTime ruleWithTime){
     template.opsForHash().put(HASH_KEY,ruleWithTime.getId(),ruleWithTime);
     return  ruleWithTime;
@@ -22,6 +28,9 @@ public RuleWithTime save(RuleWithTime ruleWithTime){
     }
     public void deleteRule(long id){
         template.opsForHash().delete(HASH_KEY,id);
+    }
+    public List<RuleWithTime> findAll(){
+        return template.opsForHash().values(HASH_KEY);
     }
 
 

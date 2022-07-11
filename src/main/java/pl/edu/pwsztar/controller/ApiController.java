@@ -65,6 +65,16 @@ public class ApiController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @CrossOrigin
+    @GetMapping(value = "/redis",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<RuleWithTime>> redis(){
+        redisComandService.redisGetAllComands();
+
+
+        return new ResponseEntity<>(redisComandService.redisGetAllComands(),HttpStatus.OK);
+    }
+
+
+    @CrossOrigin
     @PostMapping(value = "/redisComand",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> createRedisComand(@RequestBody RuleWithTime ruleWithTime){
         redisComandService.addRedisComand(ruleWithTime);

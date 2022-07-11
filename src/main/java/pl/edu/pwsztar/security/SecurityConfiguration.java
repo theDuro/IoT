@@ -41,7 +41,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/comandForIot").permitAll()
                 .antMatchers(HttpMethod.POST,"/gui/commands/save").permitAll()
                 .antMatchers(HttpMethod.POST,"/comands").permitAll()
+                .antMatchers(HttpMethod.POST,"/comands/{expire}").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(HttpMethod.GET,"/redis").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/registration").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/registration").permitAll()
                 .antMatchers("/h2-console").permitAll()//todo spawdz
                 .anyRequest().authenticated()

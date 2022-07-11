@@ -9,6 +9,9 @@ import pl.edu.pwsztar.domain.entity.RuleWithTime;
 import pl.edu.pwsztar.domain.mapper.ComandDtoToRedisComand;
 import pl.edu.pwsztar.domain.mapper.ComandToRuleWithTime;
 import pl.edu.pwsztar.domain.repository.RuleWithTimeDao;
+
+import java.util.List;
+
 @Repository
 public class RedisComandSerwiceImpl implements RedisComandService{
     private final RuleWithTimeDao ruleWithTimeDao;
@@ -36,6 +39,7 @@ public class RedisComandSerwiceImpl implements RedisComandService{
     @Override
     public void addRedisComand(RuleWithTime ruleWithTime) {
         ruleWithTimeDao.save(ruleWithTime);
+        System.out.print(ruleWithTime.getId() + "/////////////////////////////////////////////////");
     }
 
     @Override
@@ -48,6 +52,10 @@ public class RedisComandSerwiceImpl implements RedisComandService{
     public void addRedisComand(Comand comand, int expireTime) {
       ruleWithTimeDao.save(comandToRuleWithTime.comandToRuleWithTime(comand,expireTime));
     }
+    public List<RuleWithTime> redisGetAllComands(){
+        return ruleWithTimeDao.findAll();
+    }
+
 
 
 
@@ -56,3 +64,5 @@ public class RedisComandSerwiceImpl implements RedisComandService{
         return ruleWithTimeDao.findRuleById(id).getExpireTime();
     }
 }
+
+

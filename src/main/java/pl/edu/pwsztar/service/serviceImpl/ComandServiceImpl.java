@@ -78,24 +78,16 @@ public class ComandServiceImpl implements ComandService {
          comand.setComandId(id);
          comandRepository.save(comand);
          return  comand;
-/*
-        Comand comandToUpdate = comandRepository.getOne(id);
-        comandToUpdate.setLedLimitedValue(ComandDto.getLedLimitedValue());
-        comandToUpdate.setLedFrequency(ComandDto.getLedFrequency());
-        comandToUpdate.setEnginePower(ComandDto.getEnginePower());
-        comandRepository.save(comandToUpdate);
-        System.out.print(comandToUpdate);
-*/
+
     }
 
 
 
     @Override
     public ComandDto getComandDtoToIot() {
-        //todo znaleści nowy
-       // Comand comand =comandRepository.
-       Comand comand= comandRepository.getComandToIoT(comandRepository.count());
-        return getComandDtoMaper.mapToDto(comandRepository.getComandToIoT(comandRepository.count()));
+         Comand comand =comandRepository.findAll().get(0);
+         comandRepository.deleteById(comand.getComandId());
+        return getComandDtoMaper.mapToDto(comand);
 
 
     }

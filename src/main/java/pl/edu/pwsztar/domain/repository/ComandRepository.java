@@ -13,8 +13,7 @@ import java.util.List;
 @Repository
 public interface ComandRepository extends JpaRepository<Comand, Long>, CrudRepository<Comand, Long> {
     //@Modifying
-    @Query( "SELECT  c FROM Comand c  WHERE  c.comandId = :iD")
+    @Query( "SELECT  c FROM Comand c ")
     Comand getComandToIoT(@Param("iD") long iD
-
     );
 }
