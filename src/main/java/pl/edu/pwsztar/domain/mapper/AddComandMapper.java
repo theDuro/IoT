@@ -18,7 +18,8 @@ public class AddComandMapper {
 
         return comand;
     }
-    private float corectTheEmiterSetings(float setting){
+    private Float corectTheEmiterSetings(Float setting){
+        if(setting ==null) return null;
         if(setting >20.0){
             return 20.0F;
         }

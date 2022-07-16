@@ -1,4 +1,4 @@
-package pl.edu.pwsztar.domain;
+package pl.edu.pwsztar.logic;
 
 import org.springframework.stereotype.Component;
 

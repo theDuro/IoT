@@ -1,5 +1,7 @@
 package pl.edu.pwsztar.domain.entity;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.persistence.*;
 import java.io.Serializable;
 ////do przerobienia
@@ -11,7 +13,7 @@ public class Comand implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "comand_id")
-    private Long comandId;
+    private long comandId;
 
     @Column(name = "led_limit_value")
     private Float ledLimitedValue;
@@ -22,6 +24,7 @@ public class Comand implements Serializable {
     @Column(name = "engine_power")
     private Float enginePower;
 
+    @NotNull
     @Column(name = "user_id")
     private Long userId;
 

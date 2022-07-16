@@ -2,8 +2,7 @@ package pl.edu.pwsztar.service.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import pl.edu.pwsztar.domain.TimeHolder;
-import pl.edu.pwsztar.domain.dto.CreateComandDto;
+import pl.edu.pwsztar.logic.TimeHolder;
 import pl.edu.pwsztar.domain.entity.Comand;
 import pl.edu.pwsztar.domain.entity.RuleWithTime;
 import pl.edu.pwsztar.domain.mapper.ComandDtoToRedisComand;
