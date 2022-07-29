@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import pl.edu.pwsztar.domain.dto.ComandDto;
 import pl.edu.pwsztar.domain.dto.CreateComandDto;
 import pl.edu.pwsztar.domain.entity.Comand;
+import pl.edu.pwsztar.domain.entity.StateOfCurrentRule;
 import pl.edu.pwsztar.domain.mapper.AddComandMapper;
 import pl.edu.pwsztar.domain.mapper.ComandListMapper;
 import pl.edu.pwsztar.domain.mapper.GetComandDtoMaper;
@@ -24,15 +25,21 @@ public class ComandServiceImpl implements ComandService {
     private final AddComandMapper addComandMapper;
     private final GetComandDtoMaper getComandDtoMaper;
 
+
     @Autowired
-    public ComandServiceImpl(ComandRepository comandRepository,
-                             ComandListMapper comandListMapper,
-                             AddComandMapper addComandMapper, GetComandDtoMaper getComandDtoMaper) {
+    public ComandServiceImpl(
+            ComandRepository comandRepository
+            ,ComandListMapper comandListMapper
+            ,AddComandMapper addComandMapper
+            , GetComandDtoMaper getComandDtoMaper
+
+    ) {
 
         this.comandRepository = comandRepository;
         this.comandListMapper = comandListMapper;
         this.addComandMapper = addComandMapper;
         this.getComandDtoMaper = getComandDtoMaper;
+
     }
 
     @Override

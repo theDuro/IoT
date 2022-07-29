@@ -9,15 +9,16 @@ import java.util.List;
 public class LogerService {
     private final RedisLogerDao redisLogerDao;
     private final LogCreator logCreator;
+    private final String LOGGER_TXT_REFERENCE ="src/main/resources/logs.txt";
 
 
-    @Autowired
+
     public LogerService(RedisLogerDao redisLogerDao, LogCreator logCreator){
         this.redisLogerDao = redisLogerDao;
         this.logCreator = logCreator;
     }
     public void saveLog(String log){
-        redisLogerDao.save(logCreator.crateLog(log));
+        redisLogerDao.save(logCreator.crateLog(log,LOGGER_TXT_REFERENCE ));
     }
     public List<String> getAllLogs(){
         return redisLogerDao.findAll();

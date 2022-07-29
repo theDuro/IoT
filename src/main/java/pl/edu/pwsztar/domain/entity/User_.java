@@ -97,4 +97,14 @@ public class User_  implements UserDetails, Serializable {
     }
 
 
+    @OneToOne(optional = false)
+    private Comand use;
+
+    public Comand getUse() {
+        return use;
+    }
+
+    public void setUse(Comand use) {
+        this.use = use;
+    }
 }

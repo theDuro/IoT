@@ -79,4 +79,14 @@ public class Comand implements Serializable {
     }
 
 
+    @OneToOne(mappedBy = "use", optional = false)
+    private User_ user;
+
+    public User_ getUser() {
+        return user;
+    }
+
+    public void setUser(User_ user) {
+        this.user = user;
+    }
 }

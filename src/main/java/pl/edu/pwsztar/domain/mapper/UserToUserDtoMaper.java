@@ -9,8 +9,7 @@ import pl.edu.pwsztar.domain.entity.User_;
 public class UserToUserDtoMaper {
     public String  mapToString(@NotNull User_ user){
 
-        return user.getFirstName();
-
+       return user.getUsername();
     }
 
 

@@ -1,6 +1,8 @@
 package pl.edu.pwsztar.domain.dto;
 
-public class UserLoginDto {
+import java.io.Serializable;
+
+public class UserLoginDto implements Serializable {
     private String firstName;
     private String password;
 

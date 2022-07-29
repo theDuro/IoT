@@ -15,6 +15,8 @@ import pl.edu.pwsztar.domain.dto.UserRegistrationDto;
 
 import pl.edu.pwsztar.domain.entity.Comand;
 import pl.edu.pwsztar.domain.entity.RuleWithTime;
+import pl.edu.pwsztar.domain.entity.StateOfCurrentRule;
+import pl.edu.pwsztar.domain.entity.User_;
 import pl.edu.pwsztar.service.serviceImpl.ComandService;
 import pl.edu.pwsztar.service.serviceImpl.RedisComandService;
 import pl.edu.pwsztar.service.serviceImpl.UserService;
@@ -123,9 +125,15 @@ public class ApiController {
     @GetMapping(value = "/comandForIot", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ComandDto> getComandForIot() {
         ComandDto comandDto = comandService.getComandDtoToIot();
-        //todo shoiud take first one from sql anddelthe this object
-
+        redisComandService.activateRedisValueExpire(comandDto.getComandId());
         return new ResponseEntity<>(comandDto, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/IoTRule", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<StateOfCurrentRule> getRuleActualValue() {
+
+        return new ResponseEntity(redisComandService.getCurentRoleWithExpireTime(), HttpStatus.OK);
     }
 
 

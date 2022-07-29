@@ -20,6 +20,7 @@ public class RedisLogerDao {
     public void save(String logerr){
         template.opsForList().leftPush(LIST_KEY,logerr);
 
+
     }
     public List<String> findAll(){
         return template.opsForList().range(LIST_KEY,0,-1);

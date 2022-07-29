@@ -33,6 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.GET,"/getNickFromId/{id}").permitAll()
                 .antMatchers(HttpMethod.GET,"/comands").permitAll()
                 .antMatchers(HttpMethod.GET,"/gui/commands").permitAll()
                 .antMatchers(HttpMethod.GET,"/gui/commands/add").permitAll()
@@ -47,6 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/registration").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/registration").permitAll()
                 .antMatchers("/h2-console").permitAll()//todo spawdz
+                .antMatchers("/console").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new AuthenticationFilter(authenticationManager()))

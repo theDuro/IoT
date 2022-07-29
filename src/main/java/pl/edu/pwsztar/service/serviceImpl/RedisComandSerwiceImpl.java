@@ -2,57 +2,90 @@ package pl.edu.pwsztar.service.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import pl.edu.pwsztar.domain.entity.StateOfCurrentRule;
+import pl.edu.pwsztar.domain.mapper.ComandDtoToStateOfCurrentRule;
+import pl.edu.pwsztar.domain.repository.RuleWithTimeVairebleDao;
 import pl.edu.pwsztar.logic.TimeHolder;
 import pl.edu.pwsztar.domain.entity.Comand;
 import pl.edu.pwsztar.domain.entity.RuleWithTime;
 import pl.edu.pwsztar.domain.mapper.ComandDtoToRedisComand;
 import pl.edu.pwsztar.domain.mapper.ComandToRuleWithTime;
-import pl.edu.pwsztar.domain.repository.RuleWithTimeDao;
+import pl.edu.pwsztar.domain.repository.HashedRuleWitchTimeDao;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class RedisComandSerwiceImpl implements RedisComandService{
-    private final RuleWithTimeDao ruleWithTimeDao;
+    private final HashedRuleWitchTimeDao hashedRuleWitchTimeDao;
     private final ComandDtoToRedisComand comandDtoToRedisComand;
     private final TimeHolder timeHolder;
     private final ComandToRuleWithTime comandToRuleWithTime;
+    private final RuleWithTimeVairebleDao ruleWithTimeVairebleDao;
+    private final  RuleWithTime ruleWithTime;
+    private final ComandDtoToStateOfCurrentRule mapComandDtoToStateOfCurrentRule;
+
     @Autowired
-    public RedisComandSerwiceImpl(RuleWithTimeDao ruleWithTimeDao, ComandDtoToRedisComand comandDtoToRedisComand,TimeHolder timeHolder,ComandToRuleWithTime comandToRuleWithTime){
-        this.ruleWithTimeDao=ruleWithTimeDao;
+    public RedisComandSerwiceImpl(HashedRuleWitchTimeDao hashedRuleWitchTimeDao
+            , ComandDtoToRedisComand comandDtoToRedisComand
+            , TimeHolder timeHolder
+            , ComandToRuleWithTime comandToRuleWithTime
+            , RuleWithTimeVairebleDao ruleWithTimeVairebleDao
+            , RuleWithTime ruleWithTime
+            , ComandDtoToStateOfCurrentRule mapComandDtoToStateOfCurrentRule
+    ){
+        this.hashedRuleWitchTimeDao = hashedRuleWitchTimeDao;
         this.comandDtoToRedisComand = comandDtoToRedisComand;
         this.timeHolder = timeHolder;
         this.comandToRuleWithTime = comandToRuleWithTime;
+        this.ruleWithTimeVairebleDao = ruleWithTimeVairebleDao;
+        this.ruleWithTime = ruleWithTime;
+        this.mapComandDtoToStateOfCurrentRule = mapComandDtoToStateOfCurrentRule;
     }
 
-    @Override
     public RuleWithTime findById(long id) {
-        return ruleWithTimeDao.findRuleById(id);
+
+        return   hashedRuleWitchTimeDao.findRuleById(id);
     }
+
+
 
     @Override
     public void delteById(Long id) {
-        ruleWithTimeDao.deleteRule(id);
+        hashedRuleWitchTimeDao.deleteRule(id);
     }
 
     @Override
     public void addRedisComand(RuleWithTime ruleWithTime) {
-        ruleWithTimeDao.save(ruleWithTime);
-        System.out.print(ruleWithTime.getId() + "/////////////////////////////////////////////////");
+        hashedRuleWitchTimeDao.save(ruleWithTime);
+
     }
 
     @Override
     public void updateRedisComand(Comand comand, int expireTime) {
-        ruleWithTimeDao.save(comandToRuleWithTime.comandToRuleWithTime(comand,expireTime));
+        hashedRuleWitchTimeDao.save(comandToRuleWithTime.comandToRuleWithTime(comand,expireTime));
 
     }
 
     @Override
     public void addRedisComand(Comand comand, int expireTime) {
-      ruleWithTimeDao.save(comandToRuleWithTime.comandToRuleWithTime(comand,expireTime));
+      hashedRuleWitchTimeDao.save(comandToRuleWithTime.comandToRuleWithTime(comand,expireTime));
     }
+
+    @Override
+    public void addRedisHolderComand(Comand comand, int expireTime) {
+        ruleWithTimeVairebleDao.setHoldinRuleWithTime(comandToRuleWithTime.comandToRuleWithTime(comand,expireTime));
+    }
+
+    @Override
+    public void setActualHoldingIdForIoT(Long id) {
+        ruleWithTimeVairebleDao.setActualIdForIotIRedis(id);
+
+
+    }
+
     public List<RuleWithTime> redisGetAllComands(){
-        return ruleWithTimeDao.findAll();
+        return hashedRuleWitchTimeDao.findAll();
     }
 
 
@@ -60,7 +93,26 @@ public class RedisComandSerwiceImpl implements RedisComandService{
 
     @Override
     public Integer getTimeFromRedisRule(long id) {
-        return ruleWithTimeDao.findRuleById(id).getExpireTime();
+
+        return hashedRuleWitchTimeDao.findRuleById(id).getExpireTime();
+    }
+
+
+
+    @Override
+    public void activateRedisValueExpire(Long id) {
+        RuleWithTime ruleWithTime = hashedRuleWitchTimeDao.findRuleById(id);
+        ruleWithTimeVairebleDao.activateRuleandStartExpire(ruleWithTime);
+    }
+
+    @Override
+    public Long getExpireTime() {
+        return ruleWithTimeVairebleDao.getTimeExpire();
+    }
+
+    @Override
+    public StateOfCurrentRule getCurentRoleWithExpireTime() {
+       return ruleWithTimeVairebleDao.getActualRule();
     }
 }
 

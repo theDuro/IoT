@@ -4,8 +4,9 @@ import io.jsonwebtoken.Jwt;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 
 import javax.persistence.Column;
+import java.io.Serializable;
 
-public class UserRegistrationDto {
+public class UserRegistrationDto implements Serializable {
 	private String firstName;
 	private String password;
 	
