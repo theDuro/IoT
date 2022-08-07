@@ -3,9 +3,7 @@ package pl.edu.pwsztar.domain.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
-import pl.edu.pwsztar.domain.entity.RuleWithTime;
 
-import java.time.LocalDateTime;
 import java.util.List;
 @Repository
 public class RedisLogerDao {

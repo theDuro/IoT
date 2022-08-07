@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 import pl.edu.pwsztar.domain.dto.ComandDto;
-import pl.edu.pwsztar.domain.entity.RuleWithTime;
 import pl.edu.pwsztar.domain.entity.StateOfCurrentRule;
 import pl.edu.pwsztar.domain.mapper.ComandDtoToStateOfCurrentRule;
 
-import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Repository
@@ -21,12 +19,7 @@ public class RuleWithTimeVairebleDao {
         this.template = template;
         this.comandDtoToStateOfCurrentRule = comandDtoToStateOfCurrentRule;
     }
-    public void setIotExpire(long id){
-                StateOfCurrentRule stateOfCurrentRule = (StateOfCurrentRule) template.opsForValue().get(id);
-                template.opsForValue().set(VALUE_KEY,stateOfCurrentRule);
-                template.expire(VALUE_KEY,stateOfCurrentRule.getExpireTime(),TimeUnit.SECONDS);
-                template.delete(stateOfCurrentRule.getCommandid());
-            }
+
 
             public StateOfCurrentRule getActualRuleToShow(){
                Integer expire = Math.toIntExact(template.getExpire(VALUE_KEY));
@@ -36,6 +29,10 @@ public class RuleWithTimeVairebleDao {
                 //do wyswietlenia na stronie
             }
 
+    public void activateIoTVariable(ComandDto comandDto){
+                setValue(comandDtoToStateOfCurrentRule.mapComandDtoToStateOfCurrentRule(comandDto));
+                addExpireTime(Long.valueOf(comandDto.getExpire()));
+    }
 
 
     private void setValue(StateOfCurrentRule stateOfCurrentRule){
@@ -53,17 +50,7 @@ public class RuleWithTimeVairebleDao {
 
 
 
-    public void activateRuleandStartExpire(RuleWithTime ruleWithTime){
 
-       StateOfCurrentRule stateOfCurrentRule = new StateOfCurrentRule();
-       stateOfCurrentRule.setLedLimitedValue(ruleWithTime.getLedLimitedValue());
-       stateOfCurrentRule.setExpireTime(ruleWithTime.getExpireTime()==null ? 30 : ruleWithTime.getExpireTime());
-       stateOfCurrentRule.setLedFrequency(stateOfCurrentRule.getLedFrequency());
-       stateOfCurrentRule.setEnginePower(stateOfCurrentRule.getEnginePower());
-
-       setValue(stateOfCurrentRule);
-       addExpireTime(ruleWithTime.getExpireTime()==null ? 30L : ruleWithTime.getExpireTime());
-    }
 
 
 

@@ -41,8 +41,6 @@ public class ComandFasade {
 
     public void createComand(CreateComandDto createComandDto){
         Comand comand = comandService.addComand(createComandDto);
-        redisComandService.addRedisComand(comand);
-        redisComandService.addRedisHolderComand(comand);
         logerService.saveLog("add comand" + comand.toString());
 
 
@@ -51,19 +49,16 @@ public class ComandFasade {
     public void delteComand(Long id){
         logerService.saveLog("delte coomand with id: "+id);
         comandService.deleteComand(id);
-        redisComandService.delteById(id);
     }
 
     public void updateComand(Long id,Integer expire,CreateComandDto createComandDto){
         logerService.saveLog("update comand id:"+ id);
         Comand comand =comandService.updateComand(createComandDto, id);
-        redisComandService.updateRedisComand(comand);
     }
 
     public ComandDto activateAndGetcomandForIot(){
 
         ComandDto comandDto = comandService.getComandDtoToIot();
-        redisComandService.activateRedisValueExpire(comandDto.getComandId());
         return comandService.getComandDtoToIot();
     }
 

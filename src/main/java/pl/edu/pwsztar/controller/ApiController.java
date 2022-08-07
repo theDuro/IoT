@@ -6,17 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pwsztar.domain.dto.ComandDto;
 import pl.edu.pwsztar.domain.dto.CreateComandDto;
-import pl.edu.pwsztar.domain.dto.UserLoginDto;
-import pl.edu.pwsztar.domain.dto.UserRegistrationDto;
 
 import pl.edu.pwsztar.domain.entity.Comand;
-import pl.edu.pwsztar.domain.entity.RuleWithTime;
 import pl.edu.pwsztar.domain.entity.StateOfCurrentRule;
-import pl.edu.pwsztar.domain.entity.User_;
 import pl.edu.pwsztar.service.serviceImpl.ComandService;
 import pl.edu.pwsztar.service.serviceImpl.LogerService;
 import pl.edu.pwsztar.service.serviceImpl.RedisComandService;
@@ -73,37 +68,19 @@ public class ApiController {
     @PostMapping(value = "/comands/{expire}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> createComand(@RequestBody CreateComandDto createComandDto,@PathVariable("expire") Integer expire) {
         LOGGER.info("create comand: {}", createComandDto);
-
          Comand comand = comandService.addComand(createComandDto);
-
-         redisComandService.addRedisComand(comand);
          logerService.saveLog("add new command"+ comand.toString());
     //todo to test
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    @CrossOrigin
-    @GetMapping(value = "/redis",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<RuleWithTime>> redis(){
-        redisComandService.redisGetAllComands();
 
 
-        return new ResponseEntity<>(redisComandService.redisGetAllComands(),HttpStatus.OK);
-    }
 
-
-    @CrossOrigin
-    @PostMapping(value = "/redisComand",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> createRedisComand(@RequestBody RuleWithTime ruleWithTime){
-        redisComandService.addRedisComand(ruleWithTime);
-        //todo schoud be not permited
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
     @CrossOrigin
     @DeleteMapping(value = "/delte/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> createComand(@PathVariable("id") Long id) {
         comandService.deleteComand(id);
-        redisComandService.delteById(id);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -112,14 +89,9 @@ public class ApiController {
     public ResponseEntity<?> updateComand(@PathVariable("id") Long id,@PathVariable("expire") Integer expire, @RequestBody CreateComandDto createComandDto) {
         try {
             Comand comand =comandService.updateComand(createComandDto, id);
-            redisComandService.updateRedisComand(comand);
-
-
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
         }
-
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -140,7 +112,7 @@ public class ApiController {
     @GetMapping(value = "/comandForIot", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ComandDto> getComandForIot() {
         ComandDto comandDto = comandService.getComandDtoToIot();
-        redisComandService.activateRedisValueExpire(comandDto.getComandId());
+        redisComandService.activateIotTimer(comandDto);
         return new ResponseEntity<>(comandDto, HttpStatus.OK);
     }
 
