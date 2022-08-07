@@ -92,19 +92,8 @@ public class User_  implements UserDetails, Serializable {
         return token;
     }
 
-    public void setEmail(String token) {
-        this.token=token;
+
     }
 
 
-    @OneToOne(optional = false)
-    private Comand use;
 
-    public Comand getUse() {
-        return use;
-    }
-
-    public void setUse(Comand use) {
-        this.use = use;
-    }
-}

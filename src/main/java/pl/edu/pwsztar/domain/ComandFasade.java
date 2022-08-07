@@ -3,6 +3,7 @@ package pl.edu.pwsztar.domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.edu.pwsztar.domain.dto.ComandDto;
 import pl.edu.pwsztar.domain.dto.CreateComandDto;
+import pl.edu.pwsztar.domain.dto.UserToShowDto;
 import pl.edu.pwsztar.domain.entity.Comand;
 import pl.edu.pwsztar.domain.entity.StateOfCurrentRule;
 import pl.edu.pwsztar.service.serviceImpl.ComandService;
@@ -38,25 +39,29 @@ public class ComandFasade {
         return comandService.findAll();
     }
 
-    public void createComand(CreateComandDto createComandDto,Integer expire){
+    public void createComand(CreateComandDto createComandDto){
         Comand comand = comandService.addComand(createComandDto);
-        redisComandService.addRedisComand(comand,expire);
-        redisComandService.addRedisHolderComand(comand,expire);
+        redisComandService.addRedisComand(comand);
+        redisComandService.addRedisHolderComand(comand);
+        logerService.saveLog("add comand" + comand.toString());
 
 
     }
 
     public void delteComand(Long id){
+        logerService.saveLog("delte coomand with id: "+id);
         comandService.deleteComand(id);
         redisComandService.delteById(id);
     }
 
     public void updateComand(Long id,Integer expire,CreateComandDto createComandDto){
+        logerService.saveLog("update comand id:"+ id);
         Comand comand =comandService.updateComand(createComandDto, id);
-        redisComandService.updateRedisComand(comand,expire);
+        redisComandService.updateRedisComand(comand);
     }
 
     public ComandDto activateAndGetcomandForIot(){
+
         ComandDto comandDto = comandService.getComandDtoToIot();
         redisComandService.activateRedisValueExpire(comandDto.getComandId());
         return comandService.getComandDtoToIot();
@@ -64,17 +69,20 @@ public class ComandFasade {
 
     public StateOfCurrentRule getCurentRoleWithExpireTime(){
         return redisComandService.getCurentRoleWithExpireTime();
-
-
+    }
+    public List<UserToShowDto> getUsersToShow(){
+        logerService.saveLog("get users list");
+        return userService.getAllUsers();
+    }
+    public void delteUserById(long id){
+        logerService.saveLog("delte user by id: "+ id);
+        userService.delteUserById(id);
     }
 
     public List<String> getAllLogs(){
         return logerService.getAllLogs();
     }
 
-    public void saveLog(String log){
-        logerService.saveLog(log);
-    }
 
 
 

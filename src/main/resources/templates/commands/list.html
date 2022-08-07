@@ -149,23 +149,29 @@
 <body>
 
 <div id="menu">
-    <a th:href="@{/gui/commands}" class="menu-item">Komendy</a>
-    <a th:href="@{/gui/commands/add}" class="menu-item">Dodaj nową komendę</a>
+    <a th:href="@{/gui/commands}"class="menu-item">Reguły</a>
+    <a th:href="@{/gui/commands/add}" class="menu-item">Dodaj nową Regułe</a>
+    <a th:href="@{/gui/registration}" class="menu-item">Registracja</a>
+    <a th:href="@{/gui/login}" class="menu-item">Logowanie</a>
+    <a th:href="@{/gui/device-state}" class="menu-item">Status urządzenia</a>
+    <a th:href="@{/gui/adminComands}" class="menu-item">Panel Administarcyjny</a>
+
 
     <div style="clear: both;"></div>
 </div>
 
-<h1 class="header">Lista Komend</h1>
+<h1 class="header">Lista Reguł</h1>
 
 <div id="wrapper">
     <table class="styled-table">
         <thead>
         <tr>
-            <th>Id komendy</th>
+            <th>Id reguły</th>
             <th>Próg zaświecenia</th>
             <th>Częstotliwość</th>
             <th>Moc</th>
             <th>Id użytkownika</th>
+            <th>czas działania</th>
             <th>Edytuj</th>
             <th>Usuń</th>
         </tr>
@@ -177,12 +183,13 @@
             <td th:text="${command.ledFrequency}">ledFrequency</td>
             <td th:text="${command.enginePower}">enginePower</td>
             <td th:text="${command.userId}">userId</td>
-            <td><a th:href="@{/gui/commands/{commandId}/edit(commandId=${command.comandId})}">Edytuj</a></td>
-            <td><a th:href="@{/gui/commands/{commandId}/delete(commandId=${command.comandId})}">Usuń</a></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+            <td th:text="${command.expire}">expire</td>
+             <td><a th:href="@{/gui/commands/{commandId}/edit(commandId=${command.comandId})}">Edytuj</a></td>
+             <td><a th:href="@{/gui/commands/{commandId}/delete(commandId=${command.comandId})}">Usuń</a></td>
+         </tr>
+         </tbody>
+     </table>
+ </div>
 
-</body>
-</html>
+ </body>
+ </html>

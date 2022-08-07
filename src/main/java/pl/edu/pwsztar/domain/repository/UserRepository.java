@@ -39,15 +39,17 @@ public interface UserRepository extends JpaRepository<User_, Long>, CrudReposito
             @Param("firstName") String firstName
 
     );
-
-
+//todo sss
 
     @Modifying
     @Query("SELECT  u.firstName FROM User_ u WHERE u.userId = :iD")
-    String getNickByID(
+       String getNickByID(
             @Param("iD") long iD
 
     );
+
+
+
     /*
     @Modifying
     @Query("SELECT COUNT(u.firstName) FROM User_ u WHERE u.firstName = :firstName ")

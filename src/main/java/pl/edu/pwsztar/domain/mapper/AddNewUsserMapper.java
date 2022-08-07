@@ -21,10 +21,6 @@ public class AddNewUsserMapper {
         User_ user = new User_();
         user.setFirstName(userRegistrationDto.getFirstName());
         user.setPassword(bCryptPasswordEncoder.encode(userRegistrationDto.getPassword()));
-        //todo zmenic sendEmail na Token
-
-
-
         return user;
     }
 

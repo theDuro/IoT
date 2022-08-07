@@ -14,6 +14,7 @@ public class StateOfCurrentRule implements Serializable {
     private Float ledLimitedValue;
     private Float ledFrequency ;
     private Float enginePower;
+    private Long commandid;
     private Integer expireTime;
 
 }

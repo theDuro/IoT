@@ -1,11 +1,17 @@
 package pl.edu.pwsztar.domain.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
 ////do przerobienia
 @Entity
+@AllArgsConstructor
+@Setter
+@Getter
 @Table(name = "comands")
 public class Comand implements Serializable {
 
@@ -28,6 +34,9 @@ public class Comand implements Serializable {
     @Column(name = "user_id")
     private Long userId;
 
+    @Column(name ="expire")
+    private Integer expire;
+
     public Comand() {
     }
 
@@ -38,55 +47,15 @@ public class Comand implements Serializable {
         this.userId = userId;
     }
 
-    public Long getComandId() {
-        return comandId;
-    }
 
-    public void setComandId(Long comandId) {
-        this.comandId = comandId;
-    }
-
-    public Float getLedLimitedValue() {
-        return ledLimitedValue;
-    }
-
-    public void setLedLimitedValue(Float ledLimitedValue) {
-        this.ledLimitedValue = ledLimitedValue;
-    }
-
-    public Float getLedFrequency() {
-        return ledFrequency;
-    }
-
-    public void setLedFrequency(Float ledFrequency) {
-        this.ledFrequency = ledFrequency;
-    }
-
-    public Float getEnginePower() {
-        return enginePower;
-    }
-
-    public void setEnginePower(Float enginePower) {
-        this.enginePower = enginePower;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-
-    @OneToOne(mappedBy = "use", optional = false)
-    private User_ user;
-
-    public User_ getUser() {
-        return user;
-    }
-
-    public void setUser(User_ user) {
-        this.user = user;
+    @Override
+    public String toString() {
+        return "Comand{" +
+                "comandId=" + comandId +
+                ", ledLimitedValue=" + ledLimitedValue +
+                ", ledFrequency=" + ledFrequency +
+                ", enginePower=" + enginePower +
+                ", userId=" + userId +
+                '}';
     }
 }

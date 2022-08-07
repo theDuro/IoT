@@ -1,9 +1,13 @@
 package pl.edu.pwsztar.logic;
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.io.FileWriter;
+import org.springframework.stereotype.Component;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.LocalDateTime;
+
+@Component
 public class LogCreator {
 
     public String crateLog(String log,String fileName)  {
@@ -14,13 +18,24 @@ public class LogCreator {
 
  private void writeTextToFille(String text,String fileName)  {
      try {
-     FileWriter myWriter = new FileWriter(fileName);
-         myWriter.write(text);
-         myWriter.close();
-         System.out.println("Successfully wrote logger to the file.");
-     } catch (IOException e) {
-         System.out.println("An error occurred.");
-         e.printStackTrace();
+
+         // Open given file in append mode by creating an
+         // object of BufferedWriter class
+         BufferedWriter out = new BufferedWriter(
+                 new FileWriter(fileName, true));
+
+         // Writing on output stream
+         out.write(text);
+         out.newLine();
+         // Closing the connection
+         out.close();
+     }
+
+     // Catch block to handle the exceptions
+     catch (IOException e) {
+
+         // Display message when exception occurs
+         System.out.println("exception occurred" + e);
      }
  }
 }

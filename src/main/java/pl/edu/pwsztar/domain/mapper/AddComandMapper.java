@@ -14,6 +14,7 @@ public class AddComandMapper {
         comand.setLedFrequency(corectTheEmiterSetings(createComandDto.getLedFrequency()));
         comand.setLedLimitedValue(corectTheEmiterSetings((createComandDto.getLedLimitedValue())));
         comand.setUserId(createComandDto.getUserId());
+        comand.setExpire(createComandDto.getExpire()==null ? 60 :createComandDto.getExpire());
 
 
         return comand;

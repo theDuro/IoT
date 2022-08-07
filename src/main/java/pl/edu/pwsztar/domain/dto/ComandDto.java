@@ -1,7 +1,14 @@
 package pl.edu.pwsztar.domain.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 //do przerobienia
+@Getter
+@Setter
+@AllArgsConstructor
 public class ComandDto implements Serializable {
 
     private Long comandId;
@@ -9,48 +16,36 @@ public class ComandDto implements Serializable {
     private Float ledFrequency ;
     private Float enginePower;
     private Long userId;
+    private Integer expire;
 
+
+    protected ComandDto(
+             Long comandId
+            ,Float ledLimitedValue
+            ,Float enginePower
+            ,Long userId
+    ) {
+        this.comandId =comandId;
+        this.ledFrequency =ledLimitedValue;
+        this.ledLimitedValue = ledLimitedValue;
+        this.enginePower = enginePower;
+        this.userId = userId;
+
+    }
 
     public ComandDto() {
+
     }
 
-    public Long getComandId() {
-        return comandId;
-    }
 
-    public void setComandId(Long comandId) {
-        this.comandId = comandId;
-    }
-
-    public Float getLedLimitedValue() {
-        return ledLimitedValue;
-    }
-
-    public void setLedLimitedValue(Float ledLimitedValue) {
-        this.ledLimitedValue = ledLimitedValue;
-    }
-
-    public Float getLedFrequency() {
-        return ledFrequency;
-    }
-
-    public void setLedFrequency(Float ledFrequency) {
-        this.ledFrequency = ledFrequency;
-    }
-
-    public Float getEnginePower() {
-        return enginePower;
-    }
-
-    public void setEnginePower(Float enginePower) {
-        this.enginePower = enginePower;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    @Override
+    public String toString() {
+        return "ComandDto{" +
+                "comandId=" + comandId +
+                ", ledLimitedValue=" + ledLimitedValue +
+                ", ledFrequency=" + ledFrequency +
+                ", enginePower=" + enginePower +
+                ", userId=" + userId +
+                '}';
     }
 }

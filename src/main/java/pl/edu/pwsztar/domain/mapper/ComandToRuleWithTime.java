@@ -5,9 +5,9 @@ import pl.edu.pwsztar.domain.entity.Comand;
 import pl.edu.pwsztar.domain.entity.RuleWithTime;
 @Component
 public class ComandToRuleWithTime {
-    public RuleWithTime comandToRuleWithTime(Comand comand,Integer expireTime){
-        if(expireTime == null){
-            expireTime = 60;
+    public RuleWithTime comandToRuleWithTime(Comand comand){
+        if(comand.getExpire() == null){
+            comand.setExpire(60);
         }
         RuleWithTime ruleWithTime = new RuleWithTime();
         ruleWithTime.setId(comand.getComandId());
@@ -15,7 +15,7 @@ public class ComandToRuleWithTime {
         ruleWithTime.setLedLimitedValue(comand.getLedLimitedValue());
         ruleWithTime.setLedFrequency(comand.getLedFrequency());
         ruleWithTime.setEnginePower(comand.getEnginePower());
-        ruleWithTime.setExpireTime(expireTime);
+        ruleWithTime.setExpireTime(comand.getExpire());
 
         return ruleWithTime;
     }

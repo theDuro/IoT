@@ -1,0 +1,15 @@
+2022-08-05T11:30:14.394840600 add new commandComand{comandId=5, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
+2022-08-05T11:47:15.615917600 add new commandComand{comandId=1, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
+2022-08-05T11:47:16.656916400 add new commandComand{comandId=2, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
+2022-08-05T11:47:17.577913300 add new commandComand{comandId=3, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
+2022-08-05T12:05:53.921407800 get list :0
+2022-08-07T11:09:32.156857700 add new commandComand{comandId=1, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
+2022-08-07T11:09:33.773817200 add new commandComand{comandId=2, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
+2022-08-07T11:09:34.648646700 add new commandComand{comandId=3, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
+2022-08-07T11:09:35.377978900 add new commandComand{comandId=4, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
+2022-08-07T11:13:07.136140600 add new commandComand{comandId=1, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
+2022-08-07T11:13:11.327523800 add new commandComand{comandId=2, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
+2022-08-07T11:13:12.210357 add new commandComand{comandId=3, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
+2022-08-07T11:16:28.503862200 add new commandComand{comandId=1, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
+2022-08-07T11:16:29.477691400 add new commandComand{comandId=2, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
+2022-08-07T11:16:30.337221600 add new commandComand{comandId=3, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}

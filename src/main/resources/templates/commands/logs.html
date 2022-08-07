@@ -2,9 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Dodaj nową komendę</title>
+    <title>Komendy</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
-    <link rel="stylesheet" th:href="@{/css/form.css}">
+    <link rel="stylesheet" th:href="@{/css/table.css}">
 
     <style>
         body {
@@ -144,67 +144,32 @@
 .styled-table tbody tr:last-of-type {
     border-bottom: 2px solid #009879;
 }
-
-#form-container {
-    width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 100px;
-    background-color: #EEE;
-    min-height: 300px;
-    border: 2px dashed #AAA;
-}
-
-form {
-    width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-input[type=text] {
-    font-size: 16px;
-    width: 100%;
-    margin: 20px 0px;
-}
-
-textarea {
-    font-size: 14px;
-    width: 100%;
-    margin: 20px 0px;
-}
-
-input[type=submit] {
-     font-size: 16px;
-     background-color: #299644;
-     width: 200px;
-     margin-left: auto;
-     margin-right: auto;
-     display: block;
-     margin-top: 40px;
-}
-
     </style>
 </head>
 <body>
+
 <div id="menu">
-    <a th:href="@{/gui/commands}"class="menu-item">Reguły</a>
-    <a th:href="@{/gui/commands/add}" class="menu-item">Dodaj nową komendę</a>
+    <a th:href="@{/gui/commands}" class="menu-item">Powrót</a>
+    <a th:href="@{/gui/remove-logs}" class="menu-item">Usun logi</a>
 
     <div style="clear: both;"></div>
 </div>
-<h1 class="header">Dodaj nową komendę</h1>
 
-<div id="form-container">
-    <form method="post" th:action="@{/gui/commands/save}" th:object="${createComandDto}">
-        <input type="hidden" th:field="*{comandId}">
-        <input type="text" placeholder="Próg zaświecenia" th:field="*{ledLimitedValue}">
-        <input type="text" placeholder="Częstotliwość" th:field="*{ledFrequency}">
-        <input type="text" placeholder="Moc" th:field="*{enginePower}">
-        <input type="text" placeholder="Id użytkownika" th:field="*{userId}">
+<h1 class="header">Lista Logów</h1>
 
-        <input type="submit" value="Zapisz">
+<div id="wrapper">
+    <table class="styled-table">
+        <thead>
 
-    </form>
-</div>
-</body>
-</html>
+        </thead>
+        <tbody>
+        <tr th:each="log : ${logs}">
+            <td th:text="${log}">--></td>
+
+         </tr>
+         </tbody>
+     </table>
+ </div>
+
+ </body>
+ </html>

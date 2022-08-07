@@ -15,6 +15,7 @@ public class GetComandDtoMaper {
             comandDto.setLedFrequency(comand.getLedFrequency());
             comandDto.setLedLimitedValue(comand.getLedLimitedValue());
             comandDto.setUserId(comand.getUserId());
+            comandDto.setExpire(comand.getExpire());
 
 
 

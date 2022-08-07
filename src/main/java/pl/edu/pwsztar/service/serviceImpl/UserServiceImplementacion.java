@@ -1,33 +1,41 @@
 package pl.edu.pwsztar.service.serviceImpl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.edu.pwsztar.domain.dto.UserRegistrationDto;
+import pl.edu.pwsztar.domain.dto.UserToShowDto;
 import pl.edu.pwsztar.domain.entity.User_;
 import pl.edu.pwsztar.domain.mapper.AddNewUsserMapper;
 import pl.edu.pwsztar.domain.mapper.UserToUserDtoMaper;
+import pl.edu.pwsztar.domain.mapper.UserToUserToShowDtoMapper;
 import pl.edu.pwsztar.domain.repository.UserRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImplementacion implements UserService {
-    private final UserRepository userRepository;
+    private  final UserRepository userRepository;
     private final AddNewUsserMapper addNewUsserMapper;
     private final UserToUserDtoMaper userToUserDtoMaper;
+    private final UserToUserToShowDtoMapper userToUserToShowDtoMapper;
 
-
-    public UserServiceImplementacion(UserRepository userRepository,
-                                     AddNewUsserMapper addNewUsserMapper,
-                                     UserToUserDtoMaper userToUserDtoMaper) {
+    public UserServiceImplementacion(
+            UserRepository userRepository
+            ,AddNewUsserMapper addNewUsserMapper
+            ,UserToUserDtoMaper userToUserDtoMaper
+            ,UserToUserToShowDtoMapper userToUserToShowDtoMapper
+             ) {
         this.userRepository = userRepository;
         this.addNewUsserMapper = addNewUsserMapper;
         this.userToUserDtoMaper = userToUserDtoMaper;
+        this.userToUserToShowDtoMapper = userToUserToShowDtoMapper;
+
     }
 
     @Override
-    public String getUserNamebyId(Long id) {
+        public  String getUserNamebyId(Long id) {
         //todo maper User) -> UserDto
         String fakeuser = userToUserDtoMaper.mapToString(userRepository.getOne(id));
         System.out.println(fakeuser);
@@ -61,8 +69,16 @@ public class UserServiceImplementacion implements UserService {
 
     @Override
     public String getNickById(long id) {
-       return userRepository.getNickByID(id);
+       return getUserNamebyId(id);
 
+
+    }
+    public String getNickByIdForMapping(long id) {
+        try {
+            return  userRepository.getNickByID(id);
+        } catch (Exception e){
+            return "Anonim";
+        }
 
     }
 
@@ -78,6 +94,24 @@ public class UserServiceImplementacion implements UserService {
 
 
     }
+
+    @Override
+    public List<UserToShowDto> getAllUsers() {
+         return userRepository
+                 .findAll()
+                 .stream()
+                 .map(userToUserToShowDtoMapper::userToUserShowDto)
+                 .collect(Collectors.toList());
+
+    }
+
+    @Override
+    public void delteUserById(Long id) {
+      userRepository.deleteById(id);
+    }
+
+
+
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {

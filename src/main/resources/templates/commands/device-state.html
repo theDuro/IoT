@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Dodaj nową komendę</title>
+    <title>Status urządzenia</title>
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="stylesheet" th:href="@{/css/form.css}">
 
@@ -188,22 +188,18 @@ input[type=submit] {
 <body>
 <div id="menu">
     <a th:href="@{/gui/commands}"class="menu-item">Reguły</a>
-    <a th:href="@{/gui/commands/add}" class="menu-item">Dodaj nową komendę</a>
 
     <div style="clear: both;"></div>
 </div>
-<h1 class="header">Dodaj nową komendę</h1>
+<h1 class="header">Status urządzenia</h1>
 
 <div id="form-container">
-    <form method="post" th:action="@{/gui/commands/save}" th:object="${createComandDto}">
-        <input type="hidden" th:field="*{comandId}">
-        <input type="text" placeholder="Próg zaświecenia" th:field="*{ledLimitedValue}">
-        <input type="text" placeholder="Częstotliwość" th:field="*{ledFrequency}">
-        <input type="text" placeholder="Moc" th:field="*{enginePower}">
-        <input type="text" placeholder="Id użytkownika" th:field="*{userId}">
-
-        <input type="submit" value="Zapisz">
-
+    <form th:object="${stateOfCurrentRule}">
+        Id użytkownika <input readonly type="text" placeholder="userId" th:field="*{userId}">
+        Próg zaświecenia <input readonly type="text" placeholder="ledLimitedValue" th:field="*{ledLimitedValue}">
+        Częstotliwość <input readonly type="text" placeholder="ledFrequency" th:field="*{ledFrequency}">
+        Moc <input readonly type="text" placeholder="enginePower" th:field="*{enginePower}">
+        Czas do zakończenia<input readonly type="text" placeholder="expireTime" th:field="*{expireTime}">
     </form>
 </div>
 </body>

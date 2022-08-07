@@ -2,6 +2,7 @@ package pl.edu.pwsztar.service.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import pl.edu.pwsztar.domain.dto.ComandDto;
 import pl.edu.pwsztar.domain.entity.StateOfCurrentRule;
 import pl.edu.pwsztar.domain.mapper.ComandDtoToStateOfCurrentRule;
 import pl.edu.pwsztar.domain.repository.RuleWithTimeVairebleDao;
@@ -61,28 +62,25 @@ public class RedisComandSerwiceImpl implements RedisComandService{
 
     }
 
+
+
     @Override
-    public void updateRedisComand(Comand comand, int expireTime) {
-        hashedRuleWitchTimeDao.save(comandToRuleWithTime.comandToRuleWithTime(comand,expireTime));
+    public void updateRedisComand(Comand comand) {
+        hashedRuleWitchTimeDao.save(comandToRuleWithTime.comandToRuleWithTime(comand));
 
     }
 
     @Override
-    public void addRedisComand(Comand comand, int expireTime) {
-      hashedRuleWitchTimeDao.save(comandToRuleWithTime.comandToRuleWithTime(comand,expireTime));
+    public void addRedisComand(Comand comand) {
+      hashedRuleWitchTimeDao.save(comandToRuleWithTime.comandToRuleWithTime(comand));
     }
 
     @Override
-    public void addRedisHolderComand(Comand comand, int expireTime) {
-        ruleWithTimeVairebleDao.setHoldinRuleWithTime(comandToRuleWithTime.comandToRuleWithTime(comand,expireTime));
+    public void addRedisHolderComand(Comand comand) {
+        ruleWithTimeVairebleDao.setHoldinRuleWithTime(comandToRuleWithTime.comandToRuleWithTime(comand));
     }
 
-    @Override
-    public void setActualHoldingIdForIoT(Long id) {
-        ruleWithTimeVairebleDao.setActualIdForIotIRedis(id);
 
-
-    }
 
     public List<RuleWithTime> redisGetAllComands(){
         return hashedRuleWitchTimeDao.findAll();
@@ -101,8 +99,10 @@ public class RedisComandSerwiceImpl implements RedisComandService{
 
     @Override
     public void activateRedisValueExpire(Long id) {
-        RuleWithTime ruleWithTime = hashedRuleWitchTimeDao.findRuleById(id);
-        ruleWithTimeVairebleDao.activateRuleandStartExpire(ruleWithTime);
+        if(id != null) {
+            RuleWithTime ruleWithTime = hashedRuleWitchTimeDao.findRuleById(id);
+            ruleWithTimeVairebleDao.activateRuleandStartExpire(ruleWithTime);
+        }
     }
 
     @Override
@@ -114,6 +114,13 @@ public class RedisComandSerwiceImpl implements RedisComandService{
     public StateOfCurrentRule getCurentRoleWithExpireTime() {
        return ruleWithTimeVairebleDao.getActualRule();
     }
+
+    @Override
+    public StateOfCurrentRule activateIotTimer(ComandDto comandDto, Long expire) {
+        return null;
+    }
+
+
 }
 
 

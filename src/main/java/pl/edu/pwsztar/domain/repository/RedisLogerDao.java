@@ -23,6 +23,10 @@ public class RedisLogerDao {
 
     }
     public List<String> findAll(){
-        return template.opsForList().range(LIST_KEY,0,-1);
+        return (List<String>) template.opsForList().range(LIST_KEY,0,-1);
+    }
+
+    public void removeLogList(){
+        template.delete(LIST_KEY);
     }
 }

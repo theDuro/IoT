@@ -197,8 +197,6 @@ input[type=submit] {
 <div id="form-container">
     <form method="post" th:action="@{/gui/commands/save}" th:object="${createComandDto}">
         <input type="hidden" th:field="*{comandId}">
-        <input type="text" placeholder="Próg zaświecenia" th:field="*{ledLimitedValue}">
-        <input type="text" placeholder="Częstotliwość" th:field="*{ledFrequency}">
         <input type="text" placeholder="Moc" th:field="*{enginePower}">
         <input type="text" placeholder="Id użytkownika" th:field="*{userId}">
 

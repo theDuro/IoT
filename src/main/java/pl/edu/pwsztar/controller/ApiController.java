@@ -18,6 +18,7 @@ import pl.edu.pwsztar.domain.entity.RuleWithTime;
 import pl.edu.pwsztar.domain.entity.StateOfCurrentRule;
 import pl.edu.pwsztar.domain.entity.User_;
 import pl.edu.pwsztar.service.serviceImpl.ComandService;
+import pl.edu.pwsztar.service.serviceImpl.LogerService;
 import pl.edu.pwsztar.service.serviceImpl.RedisComandService;
 import pl.edu.pwsztar.service.serviceImpl.UserService;
 
@@ -33,13 +34,15 @@ public class ApiController {
     private final ComandService comandService;
     private final UserService userService;
     private final RedisComandService redisComandService;
+    private final LogerService logerService;
 
     @Autowired
-    public ApiController(ComandService comandService, UserService userService,RedisComandService redisComandService) {
+    public ApiController(ComandService comandService, UserService userService,RedisComandService redisComandService,LogerService logerService) {
 
         this.comandService = comandService;
         this.userService = userService;
         this.redisComandService = redisComandService;
+        this.logerService = logerService;
     }
 
 
@@ -49,9 +52,18 @@ public class ApiController {
         LOGGER.info("find all comands");
 
         List<ComandDto> comandDto = comandService.findAll();
+        logerService.saveLog("get list :" + comandDto.size());
         return new ResponseEntity<>(comandDto, HttpStatus.OK);
 
     }
+    @CrossOrigin
+    @GetMapping(value = "/logs",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<String>> logsList(){
+        List<String> listoffLogs = logerService.getAllLogs();
+        return new ResponseEntity<>(listoffLogs,HttpStatus.OK);
+    }
+
+
 
 
 
@@ -61,8 +73,11 @@ public class ApiController {
     @PostMapping(value = "/comands/{expire}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> createComand(@RequestBody CreateComandDto createComandDto,@PathVariable("expire") Integer expire) {
         LOGGER.info("create comand: {}", createComandDto);
+
          Comand comand = comandService.addComand(createComandDto);
-         redisComandService.addRedisComand(comand,expire);
+
+         redisComandService.addRedisComand(comand);
+         logerService.saveLog("add new command"+ comand.toString());
     //todo to test
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -97,7 +112,7 @@ public class ApiController {
     public ResponseEntity<?> updateComand(@PathVariable("id") Long id,@PathVariable("expire") Integer expire, @RequestBody CreateComandDto createComandDto) {
         try {
             Comand comand =comandService.updateComand(createComandDto, id);
-            redisComandService.updateRedisComand(comand,expire);
+            redisComandService.updateRedisComand(comand);
 
 
         } catch (Exception e) {

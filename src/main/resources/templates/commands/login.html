@@ -188,19 +188,16 @@ input[type=submit] {
 <body>
 <div id="menu">
     <a th:href="@{/gui/commands}"class="menu-item">Reguły</a>
-    <a th:href="@{/gui/commands/add}" class="menu-item">Dodaj nową komendę</a>
 
     <div style="clear: both;"></div>
 </div>
-<h1 class="header">Dodaj nową komendę</h1>
+<h1 class="header">Zaloguj sie</h1>
 
 <div id="form-container">
-    <form method="post" th:action="@{/gui/commands/save}" th:object="${createComandDto}">
-        <input type="hidden" th:field="*{comandId}">
-        <input type="text" placeholder="Próg zaświecenia" th:field="*{ledLimitedValue}">
-        <input type="text" placeholder="Częstotliwość" th:field="*{ledFrequency}">
-        <input type="text" placeholder="Moc" th:field="*{enginePower}">
-        <input type="text" placeholder="Id użytkownika" th:field="*{userId}">
+    <form method="post" th:action="@{/gui/commands/login}" th:object="${userLoginDto}">
+        <input type="text" placeholder="login" th:field="*{firstName}">
+        <input type="password" placeholder="hasło" th:field="*{password}">
+
 
         <input type="submit" value="Zapisz">
 

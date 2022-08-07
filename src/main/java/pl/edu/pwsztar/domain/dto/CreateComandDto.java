@@ -1,19 +1,25 @@
 package pl.edu.pwsztar.domain.dto;
 
-import java.io.Serializable;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.io.Serializable;
+@Setter
+@Getter
+@AllArgsConstructor
 public class CreateComandDto implements Serializable {
     private Long comandId;
     private Float ledLimitedValue;
     private Float ledFrequency ;
     private Float enginePower;
     private Long userId;
-    private int expiredTime;
+    private Integer expire;
 
     public CreateComandDto() {
     }
-    public CreateComandDto( float ledLimitedValue,float ledFrequency,float enginePower,int expiredTime,long userId) {
-        this.expiredTime = expiredTime;
+    public CreateComandDto( float ledLimitedValue,float ledFrequency,float enginePower,int expire,long userId) {
+        this.expire = expire;
         this.ledLimitedValue = ledLimitedValue;
         this.ledFrequency = ledFrequency;
         this.enginePower = enginePower;
@@ -29,43 +35,4 @@ public class CreateComandDto implements Serializable {
                 '}';
     }
 
-    public Float getLedLimitedValue() {
-        return ledLimitedValue;
-    }
-
-    public Float getLedFrequency() {
-        return ledFrequency;
-    }
-
-    public Float getEnginePower() {
-        return enginePower;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setLedLimitedValue(Float ledLimitedValue) {
-        this.ledLimitedValue = ledLimitedValue;
-    }
-
-    public void setLedFrequency(Float ledFrequency) {
-        this.ledFrequency = ledFrequency;
-    }
-
-    public void setEnginePower(Float enginePower) {
-        this.enginePower = enginePower;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getComandId() {
-        return comandId;
-    }
-
-    public void setComandId(Long comandId) {
-        this.comandId = comandId;
-    }
 }

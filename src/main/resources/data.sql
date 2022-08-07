@@ -16,6 +16,7 @@ CREATE TABLE comands (
      led_frequency FLOAT (1),
      engine_power FLOAT(1),
      user_id  INT(6),
+     expire INT(6)
 );
 
 

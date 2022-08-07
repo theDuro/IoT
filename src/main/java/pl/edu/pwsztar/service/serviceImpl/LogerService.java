@@ -1,11 +1,12 @@
 package pl.edu.pwsztar.service.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import pl.edu.pwsztar.domain.repository.RedisLogerDao;
 import pl.edu.pwsztar.logic.LogCreator;
 
 import java.util.List;
-
+@Service
 public class LogerService {
     private final RedisLogerDao redisLogerDao;
     private final LogCreator logCreator;
@@ -22,6 +23,10 @@ public class LogerService {
     }
     public List<String> getAllLogs(){
         return redisLogerDao.findAll();
+    }
+    public void removeLogs() {
+        redisLogerDao.removeLogList();
+
     }
 
 }
