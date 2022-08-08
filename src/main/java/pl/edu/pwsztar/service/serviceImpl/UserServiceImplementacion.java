@@ -53,14 +53,6 @@ public class UserServiceImplementacion implements UserService {
 
 
 
-////////////
-    @Override
-    public void changeToken(String token,String login) {
-   userRepository.updateNewToken(login,token);
-
-
-    }
-
     @Override
     public String checkIsUnikueUser(String login) {
 

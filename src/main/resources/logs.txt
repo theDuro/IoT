@@ -35,3 +35,4 @@
 2022-08-08T08:12:36.946437900 Activate new rule on IoT platform 
 2022-08-08T08:18:25.374283800 Activate new rule on IoT platform 
 2022-08-08T08:18:59.036550800 Activate new rule on IoT platform 
+2022-08-08T22:42:23.796 add comandComand{comandId=6, ledLimitedValue=4.0, ledFrequency=1.0, enginePower=1.2, userId=3}

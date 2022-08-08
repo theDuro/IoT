@@ -82,7 +82,7 @@ public class CommandController {
     }
 
     @GetMapping("/gui/commands/{commandId}/edit")
-    public String showEditCategoryForm(@PathVariable Long commandId, Model model) {
+    public String showEditCategoryForm(@PathVariable Long commandId, @RequestParam String firstName, Model model) {
 
         ComandDto comandDto =  comandFasade.findComandById(commandId);
 
@@ -121,6 +121,11 @@ public class CommandController {
     public String showLoginView(Model model) {
         model.addAttribute("userLoginDto", new UserLoginDto());
 
+        return "commands/login";
+    }
+
+    @PostMapping("/gui/login")
+    public String receiveLoginView(@ModelAttribute UserLoginDto userLoginDto) {
         return "commands/login";
     }
 

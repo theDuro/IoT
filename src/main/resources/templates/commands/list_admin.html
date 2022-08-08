@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Komendy</title>
@@ -169,7 +169,7 @@
             <th>Częstotliwość</th>
             <th>Moc</th>
             <th>Id użytkownika</th>
-            <th>Usuń</th>
+            <th sec:authorize="hasRole('ADMIN')">Usuń</th>
         </tr>
         </thead>
         <tbody>
@@ -180,7 +180,7 @@
 
             <td th:text="${command.enginePower}">enginePower
             <td th:text="${command.userId}">userId</td>
-            <td><a th:href="@{/gui/commands/{commandId}/delete(commandId=${command.comandId})}">Usuń</a></td>
+            <td sec:authorize="hasRole('ADMIN')"><a th:href="@{/gui/commands/{commandId}/delete(commandId=${command.comandId})}">Usuń</a></td>
         </tr>
         </tbody>
     </table>

@@ -12,4 +12,5 @@ import lombok.Setter;
 public class UserToShowDto {
     private Long id;
     private String firstName;
+    private String role;
 }

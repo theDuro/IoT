@@ -13,7 +13,6 @@ public interface UserService extends UserDetailsService {
 
     String getUserNamebyId(Long id) ;
     void addUser(UserRegistrationDto userRegistrationDto);
-    void changeToken(String token,String Login);
     String checkIsUnikueUser(String login);///////
     String getNickById(long id);
     void addNewUser(UserRegistrationDto userRegistrationDto);

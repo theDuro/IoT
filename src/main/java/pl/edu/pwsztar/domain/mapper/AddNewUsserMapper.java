@@ -21,6 +21,7 @@ public class AddNewUsserMapper {
         User_ user = new User_();
         user.setFirstName(userRegistrationDto.getFirstName());
         user.setPassword(bCryptPasswordEncoder.encode(userRegistrationDto.getPassword()));
+        user.setRole(userRegistrationDto.getRole());
         return user;
     }
 

@@ -9,16 +9,18 @@ import java.io.Serializable;
 public class UserRegistrationDto implements Serializable {
 	private String firstName;
 	private String password;
+	private String role;
 	
 	public UserRegistrationDto(){
 		
 	}
 	
-	public UserRegistrationDto(String firstName, String password) {
+	public UserRegistrationDto(String firstName, String password, String role) {
 
 
 		this.firstName = firstName;
 		this.password = password;
+		this.role = role;
 	}
 
 
@@ -42,5 +44,13 @@ public class UserRegistrationDto implements Serializable {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 }

@@ -26,8 +26,8 @@ public class User_  implements UserDetails, Serializable {
     @Column(name = "pasword")
     private String password;
 
-    @Column(name = "token")
-    private String token;
+    @Column(name = "role")
+    private String role;
 
 
 
@@ -88,12 +88,15 @@ public class User_  implements UserDetails, Serializable {
         this.password = password;
     }
 
-    public String getToken() {
-        return token;
+
+    public String getRole() {
+        return role;
     }
 
-
+    public void setRole(String role) {
+        this.role = role;
     }
+}
 
 
 

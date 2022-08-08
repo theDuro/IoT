@@ -184,7 +184,7 @@
             <td th:text="${command.enginePower}">enginePower</td>
             <td th:text="${command.userId}">userId</td>
             <td th:text="${command.expire}">expire</td>
-             <td><a th:href="@{/gui/commands/{commandId}/edit(commandId=${command.comandId})}">Edytuj</a></td>
+             <td><a th:href="@{/gui/commands/{commandId}/edit?firstName={firstName}(commandId=${command.comandId}, firstName=${#authentication.getPrincipal().getUsername()})}">Edytuj</a></td>
              <td><a th:href="@{/gui/commands/{commandId}/delete(commandId=${command.comandId})}">Usuń</a></td>
          </tr>
          </tbody>

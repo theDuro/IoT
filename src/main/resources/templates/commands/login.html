@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Dodaj nową komendę</title>
@@ -184,6 +184,8 @@ input[type=submit] {
 }
 
     </style>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script type="text/javascript" th:src="@{/js/actions.js}"></script>
 </head>
 <body>
 <div id="menu">
@@ -200,6 +202,7 @@ input[type=submit] {
 
 
         <input type="submit" value="Zaloguj">
+        <button type="button" th:onclick="showAlert()">abc</button>
 
     </form>
 </div>

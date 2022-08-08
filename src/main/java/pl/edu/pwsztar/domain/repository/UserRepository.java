@@ -24,14 +24,6 @@ public interface UserRepository extends JpaRepository<User_, Long>, CrudReposito
             " like :firstName")
     long checkIsLoginUniqe(@Param("firstName") String firstName);
 
-    @Modifying
-    @Query("UPDATE User_ u SET u.token = :token Where u.firstName  like :firstName"
-            )
-    void updateNewToken(@Param("firstName") String firstName,
-                        @Param("token") String token
-    );
-
-
 
     @Modifying
     @Query("SELECT  u.password FROM User_ u WHERE u.firstName LIKE :firstName")

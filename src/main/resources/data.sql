@@ -5,7 +5,7 @@ CREATE TABLE users (
    user_id INT(6) UNSIGNED AUTO_INCREMENT ,
    first_name VARCHAR (20),
    pasword VARCHAR(256),
-   token VARCHAR(24)
+   role varchar(30)
 
 );
 
