@@ -13,3 +13,25 @@
 2022-08-07T11:16:28.503862200 add new commandComand{comandId=1, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
 2022-08-07T11:16:29.477691400 add new commandComand{comandId=2, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
 2022-08-07T11:16:30.337221600 add new commandComand{comandId=3, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
+2022-08-07T17:32:35.292880700 add new commandComand{comandId=1, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
+2022-08-07T17:32:36.967537200 add new commandComand{comandId=2, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
+2022-08-07T17:32:37.878355100 add new commandComand{comandId=3, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
+2022-08-07T17:32:38.733088700 add new commandComand{comandId=4, ledLimitedValue=20.0, ledFrequency=2.0, enginePower=18.0, userId=20}
+2022-08-07T21:23:28.344067700 add comandComand{comandId=1, ledLimitedValue=20.0, ledFrequency=20.0, enginePower=20.0, userId=1}
+2022-08-07T21:40:52.585951200 add comandComand{comandId=1, ledLimitedValue=20.0, ledFrequency=20.0, enginePower=11.0, userId=1}
+2022-08-07T21:41:02.563792500 add comandComand{comandId=2, ledLimitedValue=20.0, ledFrequency=20.0, enginePower=11.0, userId=11}
+2022-08-07T21:41:24.936148900 Activate new rule on IoT platform 
+2022-08-07T21:50:10.907275800 Activate new rule on IoT platform 
+2022-08-07T21:52:40.406940300 Activate new rule on IoT platform 
+2022-08-07T21:55:38.578357100 Activate new rule on IoT platform 
+2022-08-07T21:56:33.447129900 Activate new rule on IoT platform 
+2022-08-07T21:57:23.286043900 Activate new rule on IoT platform 
+2022-08-07T21:57:44.952945300 Activate new rule on IoT platform 
+2022-08-07T21:58:10.531866600 Activate new rule on IoT platform 
+2022-08-08T07:56:52.790217100 Activate new rule on IoT platform 
+2022-08-08T07:58:46.001254 Activate new rule on IoT platform 
+2022-08-08T08:01:40.247017100 Activate new rule on IoT platform 
+2022-08-08T08:09:53.514295400 Activate new rule on IoT platform 
+2022-08-08T08:12:36.946437900 Activate new rule on IoT platform 
+2022-08-08T08:18:25.374283800 Activate new rule on IoT platform 
+2022-08-08T08:18:59.036550800 Activate new rule on IoT platform 

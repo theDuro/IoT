@@ -14,5 +14,7 @@ public interface ComandService {
     void deleteComand(Long id);
     Comand updateComand(CreateComandDto ComandDto, Long id)  throws NullPointerException;
     ComandDto getComandDtoToIot();
+    boolean isComandDataListIsEmpty();
+
 
 }

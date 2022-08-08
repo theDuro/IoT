@@ -1,12 +1,14 @@
 package pl.edu.pwsztar.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import pl.edu.pwsztar.domain.ComandFasade;
 import pl.edu.pwsztar.domain.dto.ComandDto;
 import pl.edu.pwsztar.domain.dto.CreateComandDto;
 import pl.edu.pwsztar.domain.dto.UserLoginDto;
@@ -14,7 +16,10 @@ import pl.edu.pwsztar.domain.dto.UserRegistrationDto;
 import pl.edu.pwsztar.domain.entity.StateOfCurrentRule;
 import pl.edu.pwsztar.service.serviceImpl.ComandService;
 import pl.edu.pwsztar.service.serviceImpl.LogerService;
+import pl.edu.pwsztar.service.serviceImpl.RedisComandService;
 import pl.edu.pwsztar.service.serviceImpl.UserService;
+
+import java.util.List;
 
 @Controller
 public class CommandController {
@@ -22,16 +27,25 @@ public class CommandController {
     private final ComandService comandService;
     private final UserService userService;
     private final LogerService logerService;
+    private final RedisComandService redisComandService;
+    private final  ComandFasade comandFasade;
     @Autowired
-    public CommandController(ComandService comandService,UserService userService,LogerService logerService) {
+    RedisTemplate template;
+
+    @Autowired
+    public CommandController(ComandService comandService,UserService userService,LogerService logerService,RedisComandService redisComandService,ComandFasade comandFasade) {
         this.comandService = comandService;
         this.userService = userService;
         this.logerService =logerService;
+        this.redisComandService = redisComandService;
+        this.comandFasade = comandFasade;
+
     }
 
     @GetMapping("/gui/commands")
     public String showCategoriesList(Model model) {
-        model.addAttribute("commands", comandService.findAll());
+        //model.addAttribute("commands", comandService.findAll());
+        model.addAttribute("commands", comandFasade.getAllComands());
 
         return "commands/list";
     }
@@ -54,7 +68,6 @@ public class CommandController {
     @PostMapping("/gui/registration")
     public String  registration(@ModelAttribute UserRegistrationDto userRegistrationDto){
         userService.addUser(userRegistrationDto);
-
         return "redirect:/gui/commands";
 
     }
@@ -63,7 +76,7 @@ public class CommandController {
     @PostMapping("/gui/commands/save")
     public String processCategoryForm(@ModelAttribute CreateComandDto createComandDto) {
 
-        comandService.addComand(createComandDto);
+        comandFasade.createComand(createComandDto);
 
         return "redirect:/gui/commands";
     }
@@ -71,7 +84,7 @@ public class CommandController {
     @GetMapping("/gui/commands/{commandId}/edit")
     public String showEditCategoryForm(@PathVariable Long commandId, Model model) {
 
-        ComandDto comandDto = comandService.findById(commandId);
+        ComandDto comandDto =  comandFasade.findComandById(commandId);
 
         CreateComandDto createComandDto = new CreateComandDto();
 
@@ -87,21 +100,20 @@ public class CommandController {
 
     @GetMapping("/gui/commands/{commandId}/delete")
     public String deleteCategory(@PathVariable Long commandId) {
-        comandService.deleteComand(commandId);
-
+        comandFasade.delteComand(commandId);
         return "redirect:/gui/commands";
     }
 
     @GetMapping("/gui/logs")
     public String showLogs(Model model) {
-        model.addAttribute("logs",logerService.getAllLogs());
+        model.addAttribute("logs",comandFasade.getAllLogs());
 
         return "commands/logs";
     }
 
     @GetMapping("/gui/remove-logs")
     public String removeLogs() {
-        logerService.removeLogs();
+        comandFasade.delteLogs();
         return "redirect:/gui/adminComands";
     }
 
@@ -114,7 +126,7 @@ public class CommandController {
 
     @GetMapping("/gui/adminComands")
     public String showAdminPanel(Model model) {
-        model.addAttribute("commands", comandService.findAll());
+        model.addAttribute("commands", comandFasade.getAllComands());
 
         return "commands/list_admin";
     }
@@ -135,9 +147,19 @@ public class CommandController {
 
     @GetMapping("/gui/device-state")
     public String showDeviceStateView(Model model) {
-        model.addAttribute("stateOfCurrentRule", new StateOfCurrentRule(1L,2F, 3F,4F,5L,6));
-
+        Object o = template.opsForValue().get( "ValueOfActualIot");
+        System.out.print(o+" Działa /n \n \n");
+      //  model.addAttribute("stateOfCurrentRule", redisComandService.getCurentRoleWithExpireTime());
+        model.addAttribute("stateOfCurrentRule", o);
+        //todo zmienić z Object na
         return "commands/device-state";
+    }
+    @CrossOrigin
+    @GetMapping(value = "/IoT", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ComandDto> getComandForIot() {
+
+        ComandDto comandDto = comandFasade.activateAndGetcomandForIot();
+        return new ResponseEntity<>(comandDto, HttpStatus.OK);
     }
 
 }

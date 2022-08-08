@@ -92,17 +92,14 @@ public class ComandServiceImpl implements ComandService {
 
     @Override
     public ComandDto getComandDtoToIot() {
-        try {
-            Comand comand = comandRepository.findAll().get(0);
+            Comand comand = comandRepository.findAll().get(0);//geting first from the list
             comandRepository.deleteById(comand.getComandId());
             return getComandDtoMaper.mapToDto(comand);
-        }
-        catch (Exception e){
-            return new ComandDto();// return null if comandDto List is empty
+    }
 
-        }
-
-
+    @Override
+    public boolean isComandDataListIsEmpty() {
+        return  comandRepository.count() ==0;
     }
 
 
